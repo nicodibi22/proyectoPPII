@@ -74,5 +74,6 @@
     <module>nube</module>
     <module>dominio</module>
     <module>vista</module>
+    <module>web-app</module>
   </modules>
 </project>

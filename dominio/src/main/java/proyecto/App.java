@@ -1,6 +1,7 @@
 package proyecto;
 
 import proyecto.servicios.IRedSocial;
+import proyecto.servicios.impl.RedSocialInstagram;
 import proyecto.servicios.impl.RedSocialTwitter;
 
 /**
@@ -13,7 +14,7 @@ public class App
     {
         System.out.println( "Hello World!" );
         
-        IRedSocial red = new RedSocialTwitter();
+        IRedSocial red = new RedSocialInstagram();
         red.Autenticar();
         
     }

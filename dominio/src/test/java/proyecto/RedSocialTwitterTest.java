@@ -20,5 +20,6 @@ public class RedSocialTwitterTest {
 	public void autenticarTest() {
 		IRedSocial red = new RedSocialTwitter();
 		red.Autenticar();
+		assertTrue(red.estaAutenticado());
 	}
 }

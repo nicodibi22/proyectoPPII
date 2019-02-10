@@ -9,7 +9,10 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
+import twitter4j.auth.Authorization;
+import twitter4j.auth.BasicAuthorization;
 import twitter4j.auth.NullAuthorization;
+import twitter4j.auth.OAuthAuthorization;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class RedSocialTwitter implements IRedSocial {
@@ -25,20 +28,25 @@ public class RedSocialTwitter implements IRedSocial {
 	@Override
 	public boolean estaAutenticado() {
 		// TODO Auto-generated method stub
-		return false;
+		return twitterInstance.getAuthorization().isEnabled();
 	}
 
 	@Override
 	public void Autenticar() {
-		// TODO Auto-generated method stub
+		
+		
+		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
 		  .setOAuthConsumerKey("pC5e2TMGb34NHfcB6ewSe78VN")
+		  //.setOAuthConsumerSecret("KgmJJbxg8BdhxigT0If6VKyYfvqUWA4rdl0Y")
 		  .setOAuthConsumerSecret("WHdlOlMKYwl6J2KgmJJbxg8BdhxigT0If6VKyYfvqUWA4rdl0Y")
 		  .setOAuthAccessToken("1086983048850296836-QjxMVxEo8spOtCB2ehKZIHAjYseIW1")
 		  .setOAuthAccessTokenSecret("BEx7kaPp0p4OA57mzQZumo208YZfqIGonzWASsUQ1iPFO");
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		twitterInstance = tf.getInstance();
+		
+		esUsuario();
 		
 		/*Query query = new Query();
 		query.setQuery("debate2019");
@@ -75,6 +83,19 @@ public class RedSocialTwitter implements IRedSocial {
 		
 	}
 
-	
+	public boolean esUsuario() {
+		Authorization aut = twitterInstance.getAuthorization(); 
+		
+		OAuthAuthorization  autBa = (OAuthAuthorization)aut;
+		try {
+			User usuario = twitterInstance.showUser(autBa.getOAuthAccessToken().getUserId());
+			return true;
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 	
 }
