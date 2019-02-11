@@ -23,8 +23,7 @@ public class ConectorDropBox implements INube {
         try {
             authInfo = DbxAuthInfo.Reader.readFromFile("");
         } catch (JsonReader.FileLoadException ex) {
-            System.err.println("Error loading <auth-file>: " + ex.getMessage());
-            System.exit(1);
+            System.err.println("Error loading <auth-file>: " + ex.getMessage());            
             return false;
         }
 		
