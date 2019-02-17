@@ -1,10 +1,9 @@
 language: java
 
-install:
-  - mvn test-compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script:
-  - cd dominio 
-  - mvn test jacoco:report
+script: 
+  
+  - mvn clean install
+
 after_success:
-  - cd dominio 
-  - mvn coveralls:report
+  
+  - mvn clean test org.jacoco:jacoco-maven-plugin:report org.eluder.coveralls:coveralls-maven-plugin:report
