@@ -1,9 +1,9 @@
 language: java
 
 script: 
-  
+  - cd dominio
   - mvn clean install
 
 after_success:
-  
-  - mvn clean test org.jacoco:jacoco-maven-plugin:report org.eluder.coveralls:coveralls-maven-plugin:report
+  - cd dominio
+  - mvn clean cobertura:cobertura coveralls:report
