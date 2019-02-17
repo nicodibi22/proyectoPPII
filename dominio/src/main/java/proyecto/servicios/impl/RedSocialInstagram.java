@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.jinstagram.Instagram;
 import org.jinstagram.auth.InstagramApi;
 import org.jinstagram.auth.InstagramAuthService;

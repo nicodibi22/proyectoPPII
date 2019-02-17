@@ -1,5 +1,14 @@
-proyecto\servicios\impl\RedSocialInstagram.class
-proyecto\App.class
+proyecto\servicios\impl\AutenticadorExcepcion.class
+proyecto\servicios\IAutenticador.class
+proyecto\servicios\impl\GeneradorToken.class
+proyecto\servicios\impl\ConvertToXML.class
 proyecto\servicios\INube.class
+proyecto\servicios\impl\Propiedad.class
 proyecto\servicios\impl\RedSocialTwitter.class
 proyecto\servicios\IRedSocial.class
+proyecto\servicios\impl\ConvertToJson.class
+proyecto\App.class
+proyecto\servicios\impl\RedSocialInstagram.class
+proyecto\servicios\impl\Autenticador.class
+proyecto\servicios\impl\RegistryNube.class
+proyecto\servicios\IConversor.class
