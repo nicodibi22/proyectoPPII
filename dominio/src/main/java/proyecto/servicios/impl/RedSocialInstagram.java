@@ -32,6 +32,7 @@ public class RedSocialInstagram implements IRedSocial {
 	public boolean estaAutenticado() {
 		// TODO Auto-generated method stub
 		return false;
+		
 	}
 
 	@Override
