@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import proyecto.servicios.INube;
 
-public class ConectorDrive implements INube {
+public class ConectorOneDrive implements INube {
 
 	@Override
 	public boolean conectar() {

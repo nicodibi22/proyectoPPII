@@ -26,7 +26,10 @@ public class AutenticadorApi implements IAutenticador {
 	@Override
 	public void Autenticar(String user, String password) throws AutenticadorExcepcion {
 		if(!usuarios.containsKey(user))		
-			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_VALIDO);	
+			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_VALIDO);
+		if(!usuarios.get(user).equals(password)) {
+			throw new AutenticadorExcepcion(AutenticadorExcepcion.CONTRASENIA_INVALIDA);
+		}
 	}
 
 	private void cargarUsuariosRegistrados() {
