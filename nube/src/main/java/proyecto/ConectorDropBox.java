@@ -1,6 +1,8 @@
 package proyecto;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.dropbox.core.DbxApiException;
 import com.dropbox.core.DbxAuthInfo;
@@ -8,6 +10,8 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.json.JsonReader;
 import com.dropbox.core.v2.DbxClientV2;
+import com.dropbox.core.v2.auth.DbxUserAuthRequests;
+import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.users.FullAccount;
 
 import proyecto.servicios.INube;
@@ -15,51 +19,63 @@ import proyecto.servicios.INube;
 
 public class ConectorDropBox implements INube {
 
+	
+	DbxClientV2 client;
+	DbxAuthInfo authInfo;
+	
+	
 	public boolean conectar() {
 		
 		
-		
-		DbxAuthInfo authInfo;
+		boolean result = false;
         try {
-            authInfo = DbxAuthInfo.Reader.readFromFile("");
+            authInfo = DbxAuthInfo.Reader.readFromFile("C:\\Users\\Nico\\eclipse-workspace\\parent-projectpp2\\nube\\src\\main\\java\\proyecto\\credentials.json");
         } catch (JsonReader.FileLoadException ex) {
             System.err.println("Error loading <auth-file>: " + ex.getMessage());            
-            return false;
+            return result;
         }
 		
-		DbxRequestConfig config = new DbxRequestConfig("dropbox/java-tutorial", "en_US");
-        DbxClientV2 client = new DbxClientV2(config, "bEyHbKOELXAAAAAAAAAAHz47rOuzjOXM4JV9qQKcojq_yjAAld88ZzYoQGHTl5ml");
-
-        // Get current account info
-        FullAccount account;
-		try {
-			account = client.users().getCurrentAccount();
-			System.out.println(account.getName().getDisplayName());
-		} catch (DbxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
+		if(authorize() != null)        
+			result = true;
+		return result;
 	}
 
 	public boolean upload(String pathFile) throws IOException {
-		// TODO Auto-generated method stub
+		
+		if(authorize() == null)        
+			return false;
+		
+		try (InputStream in = new FileInputStream("C:\\Users\\Nico\\eclipse-workspace\\parent-projectpp2\\nube\\src\\main\\java\\proyecto\\test.txt")) {
+            FileMetadata metadata = client.files().uploadBuilder("/test.txt")
+                .uploadAndFinish(in);
+            return true;
+        } catch (DbxException e) {
+        	e.printStackTrace();
+        }
 		
 		return false;
 	}
 
 	public String uploadId(String pathFile) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		String id ="";
+		try (InputStream in = new FileInputStream("test.txt")) {
+            FileMetadata metadata = client.files().uploadBuilder("/test.txt")
+                .uploadAndFinish(in);
+            id = metadata.getId();
+        } catch (DbxException e) {
+        	e.printStackTrace();
+        }
+		
+		return id;
 	}
 
 	public Enum<?> getTipo() {
-		// TODO Auto-generated method stub
-		return null;
+		return NubeEnum.DROPBOX;
 	}
 
-	
+	private DbxClientV2 authorize() {
+		DbxRequestConfig config = DbxRequestConfig.newBuilder("ProyectoPPII").build();
+        return new DbxClientV2(config, authInfo.getAccessToken());
+	}
 	
 }

@@ -52,14 +52,52 @@
     
 	    <groupId>com.dropbox.core</groupId>
 	    <artifactId>dropbox-core-sdk</artifactId>
-	    <version>3.0.11</version>
+	    <version>3.1.1</version>
 	</dependency>
+<dependency>
+        <groupId>de.tuberlin</groupId>
+        <artifactId>onedrivesdk</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
+    </dependency>
+    
 	<dependency>
 	    <groupId>proyecto</groupId>
 	    <artifactId>dominio</artifactId>
 	    <version>1.0-SNAPSHOT</version>
 	</dependency>
+
   </dependencies>
+
+<repositories>
+	<repository>
+      <id>public</id>
+      <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>public-snapshot</id>
+      <url>http://maven.nuxeo.org/nexus/content/groups/public-snapshot</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+	<repository>
+        <id>de.tuberlin</id>
+        <url>https://raw.github.com/tawalaya/onedrivejavasdk/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
