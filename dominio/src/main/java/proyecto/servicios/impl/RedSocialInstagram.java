@@ -24,9 +24,9 @@ import org.jinstagram.entity.users.feed.MediaFeed;
 import org.jinstagram.exceptions.InstagramException;
 import org.jinstagram.http.Response;
 
-import proyecto.servicios.IRedSocial;
+import proyecto.servicios.RedSocial;
 
-public class RedSocialInstagram implements IRedSocial {
+public class RedSocialInstagram implements RedSocial {
 
 	@Override
 	public boolean estaAutenticado() {
@@ -36,7 +36,7 @@ public class RedSocialInstagram implements IRedSocial {
 	}
 
 	@Override
-	public void Autenticar() {
+	public void autenticar() {
 		// TODO Auto-generated method stub
 		InstagramApi api = new InstagramApi();
 		
@@ -73,8 +73,14 @@ public class RedSocialInstagram implements IRedSocial {
 	}
 
 	@Override
-	public void Publicar(String comentario, String pathArchivo) {
+	public void publicar(String comentario, String pathArchivo) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getFotos(String tag) {
+		System.out.print(" Adding features of Luxury Car.");
 		
 	}
 

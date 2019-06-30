@@ -1,6 +1,6 @@
 package proyecto.servicios.impl;
 
-import proyecto.servicios.IRedSocial;
+import proyecto.servicios.RedSocial;
 import twitter4j.MediaEntity;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -15,7 +15,7 @@ import twitter4j.auth.NullAuthorization;
 import twitter4j.auth.OAuthAuthorization;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class RedSocialTwitter implements IRedSocial {
+public class RedSocialTwitter implements RedSocial {
 
 	private Twitter twitterInstance;
 	
@@ -27,12 +27,11 @@ public class RedSocialTwitter implements IRedSocial {
 	
 	@Override
 	public boolean estaAutenticado() {
-		// TODO Auto-generated method stub
 		return twitterInstance.getAuthorization().isEnabled();
 	}
 
 	@Override
-	public void Autenticar() {
+	public void autenticar() {
 		
 		
 		
@@ -48,31 +47,10 @@ public class RedSocialTwitter implements IRedSocial {
 		
 		esUsuario();
 		
-		/*Query query = new Query();
-		query.setQuery("debate2019");
-		try {
-			QueryResult result = twitter.search(query);
-			result.getCount();
-			
-			for (Status sta : result.getTweets()) {
-				
-				MediaEntity[] media = sta.getMediaEntities(); //get the media entities from the status
-				for(MediaEntity m : media){ //search trough your entities
-				    System.out.println(m.getMediaURL()); //get your url!
-				}
-				
-			}
-				
-			
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
 	}
 
 	@Override
-	public void Publicar(String comentario, String pathArchivo) throws Exception {
+	public void publicar(String comentario, String pathArchivo) throws Exception {
 		
 		if(getTwitterInstance() != null && getTwitterInstance().getAuthorization() != NullAuthorization.getInstance()) {
 			
@@ -96,6 +74,31 @@ public class RedSocialTwitter implements IRedSocial {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void getFotos(String tag) {
+		Query query = new Query();
+		query.setQuery("messi");
+		try {
+			QueryResult result = twitterInstance.search(query);
+			result.getCount();
+			
+			for (Status sta : result.getTweets()) {
+				
+				MediaEntity[] media = sta.getMediaEntities(); //get the media entities from the status
+				for(MediaEntity m : media){ //search trough your entities
+				    System.out.println(m.getMediaURL()); //get your url!
+				}
+				
+			}
+				
+			
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

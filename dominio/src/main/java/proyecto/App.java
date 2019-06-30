@@ -1,8 +1,9 @@
 package proyecto;
 
-import proyecto.servicios.IAutenticador;
-import proyecto.servicios.IRedSocial;
+import proyecto.servicios.Autenticador;
+import proyecto.servicios.RedSocial;
 import proyecto.servicios.impl.AutenticadorApi;
+import proyecto.servicios.impl.RedSocialFlickr;
 import proyecto.servicios.impl.RedSocialInstagram;
 import proyecto.servicios.impl.RedSocialTwitter;
 
@@ -16,10 +17,9 @@ public class App
     {
         System.out.println( "Hello World!" );
         
-        IAutenticador a = new AutenticadorApi();
-        
-        IRedSocial red = new RedSocialInstagram();
-        red.Autenticar();
-        
+
+        RedSocial red = new RedSocialTwitter();
+        red.autenticar();
+        red.getFotos("");
     }
 }

@@ -118,7 +118,7 @@ public class ConectorOneDrive implements INube {
 		return false;
 	}
 
-	@Override
+	
 	public String uploadId(String pathFile) throws IOException {
 		// TODO Auto-generated method stub
 		return null;
@@ -126,6 +126,12 @@ public class ConectorOneDrive implements INube {
 
 	@Override
 	public Enum<?> getTipo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String uploadAndShare(String pathFile, String user) throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}

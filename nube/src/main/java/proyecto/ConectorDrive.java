@@ -100,7 +100,7 @@ public class ConectorDrive implements INube{
     	
     	Drive service = authorize();
     	
-    	java.io.File filePath = new java.io.File(pathFile);
+    	java.io.File filePath = new java.io.File(this.pathFile);
     	String[] nombreArchivo = filePath.getName().split("\\.");
     	
     	File fileMetadata = new File();
@@ -152,10 +152,8 @@ public class ConectorDrive implements INube{
     	this.pathFile = pathFile;
     	String id ="";
     	Drive service = authorize();
-    	
-    	
-
-    	java.io.File filePath = new java.io.File(pathFile);
+    	    	
+    	java.io.File filePath = new java.io.File(this.pathFile);
     	String[] nombreArchivo = filePath.getName().split("\\.");
     	File fileMetadata = new File();
     	fileMetadata.setName(nombreArchivo[0]+ new Date().getTime() );
@@ -174,5 +172,11 @@ public class ConectorDrive implements INube{
 		}
     	return id;
     }
+
+	@Override
+	public String uploadAndShare(String pathFile, String user) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

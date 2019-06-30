@@ -1,6 +1,8 @@
 package proyecto.servicios.impl;
 
-public class GatewayRedSocial {
+import proyecto.servicios.RedSocial;
+
+public class GatewayRedSocial  {
 
 	public GatewayRedSocial(String user) {
 		
@@ -11,4 +13,9 @@ public class GatewayRedSocial {
 	public void conectar(String user) {
 		
 	}
+
+
+	
+	
 }
+

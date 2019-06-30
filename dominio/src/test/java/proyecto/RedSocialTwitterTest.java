@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import proyecto.servicios.IRedSocial;
+import proyecto.servicios.RedSocial;
 import proyecto.servicios.impl.RedSocialTwitter;
 import twitter4j.TwitterException;
 
@@ -12,14 +12,14 @@ public class RedSocialTwitterTest {
 
 	@Test (expected = TwitterException.class) 
 	public void publicarTweetNoAutorizadoTest() throws Exception {
-		IRedSocial red = new RedSocialTwitter();
-		red.Publicar("ninguno", "/test.jpg");
+		RedSocial red = new RedSocialTwitter();
+		red.publicar("ninguno", "/test.jpg");
 	}
 	
 	@Test  
 	public void autenticarTest() {
-		IRedSocial red = new RedSocialTwitter();
-		red.Autenticar();
+		RedSocial red = new RedSocialTwitter();
+		red.autenticar();
 		assertTrue(red.estaAutenticado());
 	}
 }
