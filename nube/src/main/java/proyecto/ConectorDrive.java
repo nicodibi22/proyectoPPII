@@ -174,9 +174,9 @@ public class ConectorDrive implements INube{
     }
 
 	@Override
-	public String uploadAndShare(String pathFile, String user) throws IOException {
+	public boolean uploadAndShare(String pathFile, String user) throws IOException {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 }

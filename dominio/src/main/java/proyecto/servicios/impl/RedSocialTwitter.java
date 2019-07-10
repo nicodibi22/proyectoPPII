@@ -1,10 +1,13 @@
 package proyecto.servicios.impl;
 
+import java.io.File;
+
 import proyecto.servicios.RedSocial;
 import twitter4j.MediaEntity;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
+import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -53,7 +56,14 @@ public class RedSocialTwitter implements RedSocial {
 	public void publicar(String comentario, String pathArchivo) throws Exception {
 		
 		if(getTwitterInstance() != null && getTwitterInstance().getAuthorization() != NullAuthorization.getInstance()) {
-			
+			String statusMessage = "#PruebaPPII";
+			File file = new File("C:\\Users\\Nico\\Desktop\\UNGS\\Programacion III\\5491f9e8516af.jpg"); 
+
+			StatusUpdate status = new StatusUpdate(statusMessage);
+			status.setMedia(file); // set the image to be uploaded here.
+			twitterInstance.updateStatus(status);
+			File mediaFile = null;
+			//twitterInstance.uploadMedia(mediaFile);
 		} else {
 			throw new TwitterException("Usuario no autorizado");
 		}
@@ -79,7 +89,7 @@ public class RedSocialTwitter implements RedSocial {
 	@Override
 	public void getFotos(String tag) {
 		Query query = new Query();
-		query.setQuery("messi");
+		query.setQuery(tag);
 		try {
 			QueryResult result = twitterInstance.search(query);
 			result.getCount();

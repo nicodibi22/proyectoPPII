@@ -2,6 +2,7 @@ package proyecto;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import proyecto.servicios.RedSocial;
@@ -21,5 +22,21 @@ public class RedSocialTwitterTest {
 		RedSocial red = new RedSocialTwitter();
 		red.autenticar();
 		assertTrue(red.estaAutenticado());
+	}
+	
+	@Test  
+	public void getFotosHashTagTest() {
+		RedSocial red = new RedSocialTwitter();
+		red.autenticar();
+		red.getFotos("PruebaPPII");
+		
+	}
+	
+	@Ignore @Test 
+	public void publicarTest() throws Exception {
+		RedSocial red = new RedSocialTwitter();
+		red.autenticar();
+		red.publicar("ninguno", "/test.jpg");
+		
 	}
 }

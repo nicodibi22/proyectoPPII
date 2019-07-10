@@ -1,13 +1,13 @@
 package proyecto;
 
-/**
- * Hello world!
- *
- */
+import proyecto.controladores.FrontController;
+import proyecto.servicios.impl.ManejadorIdioma.Idioma;
+
+
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+    	FrontController.getInstance(Idioma.ESPANIOL).manejarRequest("HOME");
     }
 }

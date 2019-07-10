@@ -20,6 +20,6 @@ public class App
 
         RedSocial red = new RedSocialTwitter();
         red.autenticar();
-        red.getFotos("");
+        red.getFotos("messi");
     }
 }

@@ -19,7 +19,7 @@ public interface INube {
 	 */
 	public boolean upload(String pathFile) throws IOException;
 	
-	public String uploadAndShare(String pathFile, String user) throws IOException;
+	public boolean uploadAndShare(String pathFile, String user) throws IOException;
 	
 	/**
 	 * Devuelve que tipo de servicio en la nube brinda

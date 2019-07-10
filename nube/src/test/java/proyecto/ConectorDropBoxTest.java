@@ -21,9 +21,28 @@ public class ConectorDropBoxTest {
 	}
 
 	@Test
-	public void SubirArchivoTest() throws IOException {
+	public void SubirArchivoSinConectarTest() throws IOException {
 		INube dropBox = new ConectorDropBox();
 		assertFalse(dropBox.upload(""));
+	}
+	
+	@Test
+	public void SubirArchivoTest() throws IOException {
+		INube dropBox = new ConectorDropBox();
+		dropBox.conectar();
+		assertTrue(dropBox.upload("src/test/resources/test.txt"));
+	}
+	
+	@Test
+	public void CompartirArchivoTest() throws IOException {
+		INube dropBox = new ConectorDropBox();
+		dropBox.conectar();
+		assertTrue(dropBox.uploadAndShare("src/test/resources/test.txt", "nicolas_dibiase@yahoo.com.ar"));//("src/test/resources/test.txt"));
+	}
+	
+	@Test
+	public void buscarYEncontrarConectorDrive() {
+		assertTrue(ListaNubes.loadNubes().get("DROPBOX").getTipo().equals(NubeEnum.DROPBOX));
 	}
 	
 }
