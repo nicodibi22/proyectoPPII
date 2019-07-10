@@ -37,12 +37,24 @@ public class AutenticadorApi implements Autenticador {
 	
 	@Override
 	public void autenticar(String user, String password) throws AutenticadorExcepcion {
-		if(!usuarios.containsKey(user))		
-			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_VALIDO);
-		if(!usuarios.get(user).equals(password)) {
-			throw new AutenticadorExcepcion(AutenticadorExcepcion.CONTRASENIA_INVALIDA);
-		}
-		credencial = new CredencialInfo(user, CredencialEstado.VALIDO);
+		credenciales.remove(user);
+		CredencialEstado estado = null;
+		try {
+			if(!usuarios.containsKey(user))
+			{
+				estado = CredencialEstado.INEXISTENTE;
+				
+			} else if(!usuarios.get(user).equals(password)) {
+				estado = CredencialEstado.INVALIDO;
+				
+			} else {
+				estado = CredencialEstado.VALIDO;
+			}	
+		} finally {
+			credencial = new CredencialInfo(user, estado);		
+			credenciales.put(user, credencial);		
+		}						
+		
 	}
 
 	private void cargarUsuariosRegistrados() {
@@ -68,7 +80,7 @@ public class AutenticadorApi implements Autenticador {
 		}
 	}
 	
-	public CredencialInfo getCredenciales() {
-		return credencial;
+	public CredencialInfo getCredenciales(String user) {
+		return credenciales.get(user);
 	}
 }

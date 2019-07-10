@@ -23,6 +23,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.Permission;
 
 import proyecto.servicios.INube;
 
@@ -105,7 +106,6 @@ public class ConectorDrive implements INube{
     	
     	File fileMetadata = new File();
     	fileMetadata.setName(nombreArchivo[0] + new Date().getTime());
-    	fileMetadata.setMimeType("application/vnd.google-apps.spreadsheet");
 
     	
     	FileContent mediaContent = new FileContent("text/" + nombreArchivo[1], filePath);
@@ -174,9 +174,51 @@ public class ConectorDrive implements INube{
     }
 
 	@Override
-	public boolean uploadAndShare(String pathFile, String user) throws IOException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean uploadAndShare(String pathFile, String user) {
+
+		this.pathFile = pathFile;
+    	String id ="";
+    	Drive service = authorize();
+    	    	
+    	java.io.File filePath = new java.io.File(this.pathFile);
+    	String[] nombreArchivo = filePath.getName().split("\\.");
+    	File fileMetadata = new File();
+    	fileMetadata.setName(nombreArchivo[0]+ new Date().getTime() );
+    	
+    	
+    	FileContent mediaContent = new FileContent("text/"+nombreArchivo[1], filePath);
+    	File file;
+		try {
+			file = service.files().create(fileMetadata, mediaContent)
+			.setFields("id")
+			.execute();
+			
+	    	id = file.getId();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+		
+		// All values: user - group - domain - anyone
+        String permissionType = "user"; // Valid: user, group
+        // organizer - owner - writer - commenter - reader
+        String permissionRole = "reader";
+ 
+        Permission newPermission = new Permission();
+        newPermission.setType(permissionType);
+        newPermission.setRole(permissionRole);
+ 
+        newPermission.setEmailAddress(user);
+ 
+        
+        try {
+			service.permissions().create(id, newPermission).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }

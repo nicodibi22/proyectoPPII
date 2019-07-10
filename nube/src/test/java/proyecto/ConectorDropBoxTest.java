@@ -41,7 +41,7 @@ public class ConectorDropBoxTest {
 	}
 	
 	@Test
-	public void buscarYEncontrarConectorDrive() {
+	public void buscarYEncontrarConectorDropBox() {
 		assertTrue(ListaNubes.loadNubes().get("DROPBOX").getTipo().equals(NubeEnum.DROPBOX));
 	}
 	

@@ -2,9 +2,10 @@ package proyecto.servicios.impl;
 
 public class CredencialInfo {
 
-	protected enum CredencialEstado {
+	public enum CredencialEstado {
 		VALIDO,
-		INVALIDO
+		INVALIDO,
+		INEXISTENTE
 	}
 	
 	private CredencialEstado estado;
@@ -16,4 +17,11 @@ public class CredencialInfo {
 
 	private String usuario;
 	
+	public String getUsuario() {
+		return this.usuario;
+	}
+	
+	public CredencialEstado getEstado() {
+		return this.estado;
+	}
 }

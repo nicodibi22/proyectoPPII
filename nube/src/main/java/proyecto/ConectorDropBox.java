@@ -139,8 +139,7 @@ public class ConectorDropBox implements INube {
 		List<MemberSelector> newMembers = new ArrayList<MemberSelector>();
 		MemberSelector newMember = MemberSelector.email(user);
 		newMembers.add(newMember);
-
-		DbxUserSharingRequests fileMemberActionResults;
+		
 		try {
 			client.sharing().addFileMember("/test.txt", newMembers);
 		} catch (AddFileMemberErrorException e1) {
@@ -150,7 +149,7 @@ public class ConectorDropBox implements INube {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+		/*
 		try {
 			SharedLinkMetadata meta = client.sharing().createSharedLinkWithSettings("/test");
 			System.out.println( meta.getUrl());
