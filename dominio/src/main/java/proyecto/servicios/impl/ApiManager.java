@@ -15,6 +15,7 @@ import proyecto.servicios.impl.CredencialInfo.CredencialEstado;
 
 public class ApiManager {
 
+	GatewayRedSocial redSocial;
 	
 	public enum FormatoRespuesta {
 		JSON,
@@ -55,7 +56,10 @@ public class ApiManager {
 	public String obtenerFotos(String tag) throws AutenticadorExcepcion {
 		if(!estaAutenticado()) {
 			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
-		}
+		}				
+		
+		redSocial.conectar(this.credenciales.getUsuario());
+		
 		return "";
 	}
 }
