@@ -2,6 +2,7 @@ package proyecto;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -45,7 +46,7 @@ public class ConectorDriveTest {
 	public void conectarConGoogleYValidarCredenciales() throws IOException {
 		//Intento conseguir credenciales en ubicación inexistente
 		try {
-			Credential credenciales = ConectorDrive.getCredentials("client_secret.json");
+			Credential credenciales = ConectorDrive.getCredentials("credentialsDrive.json");
 			
 			assertTrue("credenciales: ", credenciales != null );
 			
@@ -53,6 +54,20 @@ public class ConectorDriveTest {
 			assertTrue("Obtención de credenciales", true);
 		}
 	}	
+	
+	@Test
+	public void subirArchivoTest() throws IOException {
+		ConectorDrive drive = new ConectorDrive();
+		drive.conectar();
+		assertTrue(drive.upload("src/test/resources/test.txt"));
+	}
+	
+	@Test
+	public void subirYCompartirArchivoTest() throws IOException {
+		ConectorDrive drive = new ConectorDrive();
+		drive.conectar();
+		assertTrue(drive.uploadAndShare("src/test/resources/test.txt", "nicolas.dibiase22@gmail.com"));
+	}
 	
 	@Test
 	public void buscarTresNubesEnLista() {
@@ -73,5 +88,7 @@ public class ConectorDriveTest {
 	public void factoryDeNubesDevolvemeListaConAlMenosUna() {
 		assertTrue(NubeManagerFactory.getNube(Arrays.asList("GOOGLEDRIVE")).size() > 0);
 	}
+	
+	
 
 }

@@ -60,8 +60,7 @@ public class ConectorDropBox implements INube {
 	public boolean upload(String pathFile) throws IOException {
 		
 		try {
-			if(authorize() == null)        
-				return false;
+			authorize();
 		} catch (DbxException e1) {
 			e1.printStackTrace();
 			return false;
@@ -80,19 +79,6 @@ public class ConectorDropBox implements INube {
         }
 		
 		return false;
-	}
-
-	public String uploadId(String pathFile) throws IOException {
-		String id ="";
-		try (InputStream in = new FileInputStream("test.txt")) {
-            FileMetadata metadata = client.files().uploadBuilder("/test.txt")
-                .uploadAndFinish(in);
-            id = metadata.getId();
-        } catch (DbxException e) {
-        	e.printStackTrace();
-        }
-		
-		return id;
 	}
 
 	public Enum<?> getTipo() {
@@ -134,6 +120,7 @@ public class ConectorDropBox implements INube {
 			id = metadata.getId();
         } catch (DbxException e) {
         	e.printStackTrace();
+        	return false;
         }
 		
 		List<MemberSelector> newMembers = new ArrayList<MemberSelector>();
@@ -143,11 +130,10 @@ public class ConectorDropBox implements INube {
 		try {
 			client.sharing().addFileMember("/test.txt", newMembers);
 		} catch (AddFileMemberErrorException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			
+			return false;
 		} catch (DbxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			return false;
 		}
 		/*
 		try {

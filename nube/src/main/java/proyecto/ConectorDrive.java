@@ -142,36 +142,7 @@ public class ConectorDrive implements INube{
 			e.printStackTrace();
 		}
         return service;
-    }
-    
-    /**
-     * 
-     * @return id del archivo subido
-     */
-    public String uploadId(String pathFile){
-    	this.pathFile = pathFile;
-    	String id ="";
-    	Drive service = authorize();
-    	    	
-    	java.io.File filePath = new java.io.File(this.pathFile);
-    	String[] nombreArchivo = filePath.getName().split("\\.");
-    	File fileMetadata = new File();
-    	fileMetadata.setName(nombreArchivo[0]+ new Date().getTime() );
-    	fileMetadata.setMimeType("application/vnd.google-apps.spreadsheet");
-    	
-    	FileContent mediaContent = new FileContent("text/"+nombreArchivo[1], filePath);
-    	File file;
-		try {
-			file = service.files().create(fileMetadata, mediaContent)
-			.setFields("id")
-			.execute();
-			
-	    	id = file.getId();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	return id;
-    }
+    }    
 
 	@Override
 	public boolean uploadAndShare(String pathFile, String user) {
