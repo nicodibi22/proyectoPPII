@@ -11,9 +11,8 @@ import proyecto.servicios.impl.AutenticadorExcepcion;
 public class AutenticadorApiTest {
 
 	private String USER = "nicodibi";
-	private String USERINCORRECTO = "nicodibi2";
 	private String PASS = "algo";
-	private String PASSINCORRECTA = "algo2";
+	
 	@Test
 	public void autenticarTest() {
 		
@@ -26,19 +25,4 @@ public class AutenticadorApiTest {
 		
 	}
 
-	@Test (expected=AutenticadorExcepcion.class)
-	public void autenticarUsuarioIncorrectoTest() throws AutenticadorExcepcion{
-		
-		Autenticador auten = AutenticadorApi.getInstance();		
-		auten.autenticar(USERINCORRECTO, PASS);
-		
-	}
-	
-	@Test (expected=AutenticadorExcepcion.class)
-	public void autenticarClaveIncorrectoTest() throws AutenticadorExcepcion {
-		
-		Autenticador auten = AutenticadorApi.getInstance();
-		auten.autenticar(USER, PASSINCORRECTA);		
-		
-	}
 }

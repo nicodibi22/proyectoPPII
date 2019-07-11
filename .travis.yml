@@ -7,3 +7,5 @@ script:
 after_success:
   - cd dominio
   - mvn clean test jacoco:report coveralls:report
+  - cd ../nube
+  - mvn clean test jacoco:report coveralls:report
