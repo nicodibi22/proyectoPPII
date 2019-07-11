@@ -48,6 +48,61 @@
   <artifactId>flickr4java</artifactId>
   <version>3.0.1</version>
 </dependency>
+<dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-drive</artifactId>
+      <version>v3-rev86-1.23.0</version>
+      <exclusions>
+        <exclusion>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </exclusion>
+    </exclusions>
+    </dependency>
+     <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client</artifactId>
+      <version>1.23.0</version>
+      <exclusions>
+        <exclusion>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </exclusion>
+    </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client-jackson2</artifactId>
+      <version>1.23.0</version>
+      <exclusions>
+        <exclusion>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </exclusion>
+    </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.google.oauth-client</groupId>
+      <artifactId>google-oauth-client-jetty</artifactId>
+      <version>1.23.0</version>
+      <exclusions>
+        <exclusion>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </exclusion>
+    </exclusions>
+	</dependency>	
+    <dependency>
+    
+	    <groupId>com.dropbox.core</groupId>
+	    <artifactId>dropbox-core-sdk</artifactId>
+	    <version>3.1.1</version>
+	</dependency>
+<dependency>
+        <groupId>de.tuberlin</groupId>
+        <artifactId>onedrivesdk</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
 </project>

@@ -12,6 +12,22 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+
 import proyecto.servicios.impl.ManejadorEtiqueta;
 
 /*import com.economizate.batch.BackupArchivo;
@@ -33,6 +49,67 @@ import com.lowagie.text.Image;*/
 import java.awt.BorderLayout;
 
 public class Home implements ActionListener, java.util.Observer{
+	
+	
+	private final Map<String, ImageIcon> imageMap;
+
+    public Home() {
+        String[] nameList = {"Mario", "Luigi", "Bowser", "Koopa", "Princess"};
+        imageMap = createImageMap(nameList);
+        JList list = new JList(nameList);
+        list.setCellRenderer(new MarioListRenderer());
+        list.setVisibleRowCount(1);
+        list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        JScrollPane scroll = new JScrollPane(list);
+        scroll.setPreferredSize(new Dimension(1000, 200));
+
+        JFrame frame = new JFrame();
+        frame.add(scroll);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    public class MarioListRenderer extends DefaultListCellRenderer {
+
+        Font font = new Font("helvitica", Font.BOLD, 24);
+
+        @Override
+        public Component getListCellRendererComponent(
+                JList list, Object value, int index,
+                boolean isSelected, boolean cellHasFocus) {
+
+            JLabel label = (JLabel) super.getListCellRendererComponent(
+                    list, value, index, isSelected, cellHasFocus);
+            Image scaled = scaleImage(imageMap.get((String) value).getImage(), 128, 128);
+            ImageIcon scaledIcon = new ImageIcon(scaled);
+            label.setIcon(scaledIcon);
+            
+            return label;
+        }
+    }
+
+    private Map<String, ImageIcon> createImageMap(String[] list) {
+        Map<String, ImageIcon> map = new HashMap<>();
+        try {
+            map.put("Mario", new ImageIcon("C:\\Users\\nidibiase\\Desktop\\Fondos de pantalla\\arya.jpeg"));
+            map.put("Luigi", new ImageIcon(new URL("http://i.stack.imgur.com/UvHN4.png")));
+            map.put("Bowser", new ImageIcon(new URL("http://i.stack.imgur.com/s89ON.png")));
+            map.put("Koopa", new ImageIcon(new URL("http://i.stack.imgur.com/QEK2o.png")));
+            map.put("Princess", new ImageIcon(new URL("http://i.stack.imgur.com/f4T4l.png")));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return map;
+    }
+
+    private Image scaleImage(Image image, int w, int h) {
+
+        Image scaled = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+
+        return scaled;
+    }
 	
 	private static Logger logger = Logger.getLogger(Home.class.getName());
 	
@@ -56,7 +133,7 @@ public class Home implements ActionListener, java.util.Observer{
 	
 	private ManejadorEtiqueta etiquetas;
 	
-	public Home() {
+	/*public Home() {
 		//this.email = Propiedad.getInstance().getPropiedad("email");
 		//usuarios = new ConectorUsuario(). instancias.getUsuariosObservadorService(this);
 		//saldos = new Cuenta();
@@ -64,7 +141,7 @@ public class Home implements ActionListener, java.util.Observer{
 		//usuario = usuarios.buscarUsuarioPorEmail(email);
 		iniciarComponentes();
 		
-	}
+	}*/
 	
 	public void iniciarListeners() {
 		//ingresoListener = new IngresoListener(this, email, saldos.getTotal());
