@@ -51,14 +51,15 @@ public class ApiManager {
 		return this.getCredenciales().getEstado().equals(CredencialEstado.VALIDO);
 	}
 	
-	public void subirNube() throws AutenticadorExcepcion {
+	public void subirNube(String nombreArchivo) throws AutenticadorExcepcion {
 		if(!estaAutenticado()) {
 			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
 		}
 		List<String> nubes = getListaNubes();
-		CircuitBreaker circuitBreaker = new CircuitBreakerNube(nubes);
+		CircuitBreaker circuitBreaker = CircuitBreakerNube.gestInstance().agregarNubes(getListaNubes());
 		for(String n : nubes) {
 			try {
+				
 				circuitBreaker.ejecutar(n);
 			} catch (CircuitBreakerException e) {
 				e.printStackTrace();
@@ -72,7 +73,7 @@ public class ApiManager {
 		}				
 		
 		redSocial.conectar(this.credenciales.getUsuario());
-		
+		redSocial.getFotos(tag);
 		return "";
 	}
 	
