@@ -45,94 +45,28 @@ public class ConectorOneDrive implements INube {
 			e1.printStackTrace();
 		}
 		System.out.println(api.isAuthenticated());
-		//return false;
-		openWebpage(api.getAuthenticationURL());
-
-        //intercepts redirect end automatically enters the oAuth Code
-        ServerSocket serverSocket = null;
-        try {
-            serverSocket = new ServerSocket(8082);
-            while (!api.isAuthenticated()) {
-                Socket s = serverSocket.accept();
-                BufferedReader bs = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                String line;
-                while ((line = bs.readLine()) != null) {
-                    Matcher m = Pattern.compile("\\?code=([^ ]+) HTTP").matcher(line);
-                    if (m.find()) {
-                    	
-                        try {
-							api.authenticate(m.group(1));
-						} catch (OneDriveException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-                        /*OutputStream os = s.getOutputStream();
-                        os.write(new String(html_response).getBytes());
-                        os.close();*/
-                        break;
-                    }
-                }
-
-                s.close();
-            }
-            serverSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-			OneFolder currentFolder = api.getRootFolder();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OneDriveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
+        
         api.startSessionAutoRefresh();
         return api.isAuthenticated();
     }
 
-    private static void openWebpage(URI uri) {
-        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(uri);
-            } catch (Exception e) {}
-        }
-    }
-
-    private static void openWebpage(String url) {
-        try {
-            openWebpage(new URL(url).toURI());
-        } catch (Exception e) {}
-    }
-
 	@Override
 	public boolean upload(String pathFile) throws IOException {
-		// TODO Auto-generated method stub
-		
 		
 		return false;
 	}
 
 	
-	public String uploadId(String pathFile) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Enum<?> getTipo() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public boolean uploadAndShare(String pathFile, String user) throws IOException {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

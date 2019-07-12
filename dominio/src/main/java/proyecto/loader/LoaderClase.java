@@ -18,9 +18,11 @@ public class LoaderClase extends ClassLoader{
     public Class loadClass(String name) throws ClassNotFoundException {
     	
     	
-        if(!Propiedad.getInstance().getPropiedad("nubeSeleccionada").equals(name) 
+        if(!Propiedad.getInstance().getPropiedad("nubeDrive").equals(name) 
         		&& !Propiedad.getInstance().getPropiedad("nubes").equals(name)
-        		&& !Propiedad.getInstance().getPropiedad("propiedadesExtra").equals(name))
+        		&& !Propiedad.getInstance().getPropiedad("nubeDropBox").equals(name)
+        		&& !Propiedad.getInstance().getPropiedad("nubeOneDrive").equals(name)
+        		&& !Propiedad.getInstance().getPropiedad("propiedadesExtra").equals(name) )
                 return super.loadClass(name);
        
         try {
