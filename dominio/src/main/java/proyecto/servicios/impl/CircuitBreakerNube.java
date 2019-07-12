@@ -2,15 +2,11 @@ package proyecto.servicios.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-
 import proyecto.loader.LoaderClase;
 import proyecto.servicios.CircuitBreaker;
 import proyecto.servicios.INube;
 
 public class CircuitBreakerNube implements CircuitBreaker {
-
-	private static CircuitBreakerNube instance = null;
 	
 	private int intentos = 5;
 	
@@ -35,7 +31,7 @@ public class CircuitBreakerNube implements CircuitBreaker {
 	}
 	
 	@Override
-	public void ejecutar(String nube) {
+	public void ejecutar(String nube) throws CircuitBreakerException {
 		
 		Monitor mon = estadoNubes.get(nube);
 		
@@ -55,10 +51,13 @@ public class CircuitBreakerNube implements CircuitBreaker {
 				
 			} catch (ClassNotFoundException e) {			
 				mon.aumentarIntentoFallido();
+				throw new CircuitBreakerException("No se encontró la clase.");
 			} catch (InstantiationException e) {
 				mon.aumentarIntentoFallido();
+				throw new CircuitBreakerException("Error en instanciación.");
 			} catch (IllegalAccessException e) {
 				mon.aumentarIntentoFallido();
+				throw new CircuitBreakerException("Acceso ilegal.");
 			}	
 		}
 		

@@ -1,8 +1,10 @@
 package proyecto.servicios.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -10,7 +12,9 @@ import org.json.simple.JSONObject;
 import com.google.gson.JsonObject;
 
 import proyecto.CredencialesApi;
+import proyecto.loader.LoaderClase;
 import proyecto.servicios.Autenticador;
+import proyecto.servicios.CircuitBreaker;
 import proyecto.servicios.impl.CredencialInfo.CredencialEstado;
 
 public class ApiManager {
@@ -51,6 +55,15 @@ public class ApiManager {
 		if(!estaAutenticado()) {
 			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
 		}
+		List<String> nubes = getListaNubes();
+		CircuitBreaker circuitBreaker = new CircuitBreakerNube(nubes);
+		for(String n : nubes) {
+			try {
+				circuitBreaker.ejecutar(n);
+			} catch (CircuitBreakerException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public String obtenerFotos(String tag) throws AutenticadorExcepcion {
@@ -61,5 +74,12 @@ public class ApiManager {
 		redSocial.conectar(this.credenciales.getUsuario());
 		
 		return "";
+	}
+	
+	public static List<String> getListaNubes() {
+		return Arrays.asList(
+				"GOOGLEDRIVE",
+				"DROPBOX",
+				"ONEDRIVE");
 	}
 }
