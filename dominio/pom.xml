@@ -98,11 +98,7 @@
 	    <artifactId>dropbox-core-sdk</artifactId>
 	    <version>3.1.1</version>
 	</dependency>
-<dependency>
-        <groupId>de.tuberlin</groupId>
-        <artifactId>onedrivesdk</artifactId>
-        <version>0.0.4-SNAPSHOT</version>
-    </dependency>
+
   </dependencies>
 
 </project>

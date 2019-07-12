@@ -1,3 +1,6 @@
-proyecto\AppTest.class
+proyecto\ApiManagerTest.class
+proyecto\MultiIdiomaTest.class
 proyecto\GeneradorTokenTest.class
+proyecto\AutenticadorApiTest.class
 proyecto\RedSocialTwitterTest.class
+proyecto\LoaderTest.class

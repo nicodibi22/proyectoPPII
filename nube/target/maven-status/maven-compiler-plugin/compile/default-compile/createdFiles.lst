@@ -1,3 +1,8 @@
-proyecto\App.class
 proyecto\ConectorDrive.class
+proyecto\NubePropiedades.class
+proyecto\ReaderDrive.class
 proyecto\ConectorDropBox.class
+proyecto\NubeManagerFactory.class
+proyecto\NubeEnum.class
+proyecto\ListaNubes.class
+proyecto\ConectorOneDrive.class
