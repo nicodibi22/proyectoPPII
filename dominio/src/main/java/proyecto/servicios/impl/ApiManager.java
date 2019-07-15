@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.json.simple.JSONObject;
 
@@ -15,11 +16,23 @@ import proyecto.CredencialesApi;
 import proyecto.loader.LoaderClase;
 import proyecto.servicios.Autenticador;
 import proyecto.servicios.CircuitBreaker;
+import proyecto.servicios.CircuitBreakerException;
+import proyecto.servicios.INube;
 import proyecto.servicios.impl.CredencialInfo.CredencialEstado;
 
 public class ApiManager {
 
 	GatewayRedSocial redSocial;
+	
+	GatewayNube gNube;
+	
+	private GatewayNube getInstanceNube() throws IllegalAccessException {
+		
+		if(gNube == null) {
+			gNube = new GatewayNube(this.credenciales.getUsuario());
+		}
+		return gNube;
+	}
 	
 	public enum FormatoRespuesta {
 		JSON,
@@ -51,20 +64,24 @@ public class ApiManager {
 		return this.getCredenciales().getEstado().equals(CredencialEstado.VALIDO);
 	}
 	
-	public void subirNube(String nombreArchivo) throws AutenticadorExcepcion {
+	/*public void subirNube(String nombreArchivo) throws AutenticadorExcepcion, Exception {
 		if(!estaAutenticado()) {
 			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
 		}
-		List<String> nubes = getListaNubes();
-		CircuitBreaker circuitBreaker = CircuitBreakerNube.gestInstance().agregarNubes(getListaNubes());
-		for(String n : nubes) {
-			try {
-				
-				circuitBreaker.ejecutar(n);
-			} catch (CircuitBreakerException e) {
-				e.printStackTrace();
-			}
+		
+		
+		GatewayNube gNube = new GatewayNube(this.credenciales.getUsuario());
+		
+		gNube.subirArchivosCompartir(nombreArchivo, mailUsuarios);
+	}*/
+	
+	public void subirCompartirNube(String nombreArchivo, String mailUsuarios) throws AutenticadorExcepcion, Exception {
+		if(!estaAutenticado()) {
+			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
 		}
+				
+		gNube = getInstanceNube();		
+		gNube.subirArchivosCompartir(nombreArchivo, mailUsuarios);
 	}
 	
 	public String obtenerFotos(String tag) throws AutenticadorExcepcion {

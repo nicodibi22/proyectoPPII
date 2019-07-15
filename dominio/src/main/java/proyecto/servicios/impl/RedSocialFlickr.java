@@ -10,7 +10,6 @@ import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
-import com.flickr4java.flickr.test.TestInterface;
 
 import proyecto.servicios.RedSocial;
 

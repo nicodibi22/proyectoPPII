@@ -1,6 +1,6 @@
-package proyecto.servicios.impl;
+package proyecto.servicios;
 
-public class CircuitBreakerException extends Exception {
+public abstract class CircuitBreakerException extends Exception {
 		
 		private static final long serialVersionUID = 1L;
 

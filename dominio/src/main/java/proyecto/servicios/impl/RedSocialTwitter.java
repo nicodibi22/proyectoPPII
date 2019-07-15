@@ -36,8 +36,6 @@ public class RedSocialTwitter implements RedSocial {
 	@Override
 	public void autenticar() {
 		
-		
-		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
 		  .setOAuthConsumerKey("pC5e2TMGb34NHfcB6ewSe78VN")
