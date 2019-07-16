@@ -20,6 +20,6 @@ public class Album {
 	}
 	
 	public void agregarFotos(List<Foto> fotos) {
-		fotos.addAll(fotos);
+		this.fotos.addAll(fotos);
 	}
 }
