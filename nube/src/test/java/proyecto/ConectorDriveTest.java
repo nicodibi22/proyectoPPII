@@ -1,20 +1,12 @@
 package proyecto;
 
 import static org.junit.Assert.*;
-
-import org.junit.Ignore;
 import org.junit.Test;
-
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.List;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.services.drive.model.File;
 
 public class ConectorDriveTest {
 	
@@ -56,17 +48,21 @@ public class ConectorDriveTest {
 	}	
 	
 	@Test
-	public void subirArchivoTest() throws IOException {
+	public void subirArchivosTest() throws IOException {
 		ConectorDrive drive = new ConectorDrive();
 		drive.conectar();
-		assertTrue(drive.upload("src/test/resources/test.txt"));
+		assertTrue(drive.upload(NubePropiedades.getInstance().getPropiedad("IMAGEN_JPG")));
+		assertTrue(drive.upload(NubePropiedades.getInstance().getPropiedad("ARCHIVO_TEXTO")));
 	}
 	
 	@Test
-	public void subirYCompartirArchivoTest() throws IOException {
+	public void subirYCompartirArchivosTest() throws IOException {
 		ConectorDrive drive = new ConectorDrive();
 		drive.conectar();
-		assertTrue(drive.uploadAndShare("src/test/resources/test.txt", "nicolas.dibiase22@gmail.com"));
+		assertTrue(drive.uploadAndShare(NubePropiedades.getInstance().getPropiedad("IMAGEN_PNG"), 
+				NubePropiedades.getInstance().getPropiedad("MAIL_DOS")));
+		assertTrue(drive.uploadAndShare(NubePropiedades.getInstance().getPropiedad("ARCHIVO_TEXTO"), 
+				NubePropiedades.getInstance().getPropiedad("MAIL_UNO")));
 	}
 	
 	@Test
@@ -79,16 +75,4 @@ public class ConectorDriveTest {
 		assertTrue(ListaNubes.loadNubes().get("GOOGLEDRIVE").getTipo().equals(NubeEnum.DRIVE));
 	}
 	
-	@Test
-	public void factoryDeNubesDevolvemeUnaAunqueSea() {
-		assertTrue(NubeManagerFactory.getNube("GOOGLEDRIVE").getTipo().equals(NubeEnum.DRIVE));
-	}
-	
-	@Test
-	public void factoryDeNubesDevolvemeListaConAlMenosUna() {
-		assertTrue(NubeManagerFactory.getNube(Arrays.asList("GOOGLEDRIVE")).size() > 0);
-	}
-	
-	
-
 }

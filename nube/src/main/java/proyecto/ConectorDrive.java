@@ -106,9 +106,8 @@ public class ConectorDrive implements INube{
     	
     	File fileMetadata = new File();
     	fileMetadata.setName(nombreArchivo[0] + new Date().getTime());
-
-    	
-    	FileContent mediaContent = new FileContent("text/" + nombreArchivo[1], filePath);
+    	    
+    	FileContent mediaContent = new FileContent(getContentType(nombreArchivo[1]) + "/" + nombreArchivo[1], filePath);
     	File file;
 		
 			file = service.files().create(fileMetadata, mediaContent)
@@ -145,7 +144,7 @@ public class ConectorDrive implements INube{
     }    
 
 	@Override
-	public boolean uploadAndShare(String pathFile, String user) {
+	public boolean uploadAndShare(String pathFile, String user) { 
 
 		this.pathFile = pathFile;
     	String id ="";
@@ -157,7 +156,7 @@ public class ConectorDrive implements INube{
     	fileMetadata.setName(nombreArchivo[0]+ new Date().getTime() );
     	
     	
-    	FileContent mediaContent = new FileContent("text/"+nombreArchivo[1], filePath);
+    	FileContent mediaContent = new FileContent(getContentType(nombreArchivo[1]) + "/" + nombreArchivo[1], filePath);
     	File file;
 		try {
 			file = service.files().create(fileMetadata, mediaContent)
@@ -168,8 +167,7 @@ public class ConectorDrive implements INube{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	
-		
+    			
 		// All values: user - group - domain - anyone
         String permissionType = "user"; // Valid: user, group
         // organizer - owner - writer - commenter - reader
@@ -177,11 +175,9 @@ public class ConectorDrive implements INube{
  
         Permission newPermission = new Permission();
         newPermission.setType(permissionType);
-        newPermission.setRole(permissionRole);
- 
+        newPermission.setRole(permissionRole); 
         newPermission.setEmailAddress(user);
- 
-        
+         
         try {
 			service.permissions().create(id, newPermission).execute();
 		} catch (IOException e) {
@@ -192,4 +188,21 @@ public class ConectorDrive implements INube{
 		return true;
 	}
 
+	private String getContentType(String extension) {
+		String type = "";
+		switch (extension) {
+		case "png": 
+			type = "image";
+			break;
+		case "jpg": 
+			type = "image";
+			break;
+		case "jpeg": 
+			type = "image";
+			break;
+		default:
+			type = "text";
+		}
+		return type;
+	}
 }

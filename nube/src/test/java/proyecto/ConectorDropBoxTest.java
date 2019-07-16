@@ -1,14 +1,8 @@
 package proyecto;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
-
-import org.junit.Before;
 import org.junit.Test;
-
-import com.dropbox.core.DbxException;
-
 import proyecto.servicios.INube;
 
 public class ConectorDropBoxTest {
@@ -27,17 +21,20 @@ public class ConectorDropBoxTest {
 	}
 	
 	@Test
-	public void SubirArchivoTest() throws IOException {
+	public void SubirArchivoImagenTest() throws IOException {
 		INube dropBox = new ConectorDropBox();
 		dropBox.conectar();
-		assertTrue(dropBox.upload("src/test/resources/test.txt"));
+		assertTrue(dropBox.upload(NubePropiedades.getInstance().getPropiedad("IMAGEN_PNG")));		
 	}
 	
 	@Test
 	public void CompartirArchivoTest() throws IOException {
 		INube dropBox = new ConectorDropBox();
 		dropBox.conectar();
-		assertTrue(dropBox.uploadAndShare("src/test/resources/test.txt", "nicolas_dibiase@yahoo.com.ar"));//("src/test/resources/test.txt"));
+		assertTrue(dropBox.uploadAndShare(NubePropiedades.getInstance().getPropiedad("ARCHIVO_TEXTO"), 
+				NubePropiedades.getInstance().getPropiedad("MAIL_UNO")));
+		assertTrue(dropBox.uploadAndShare(NubePropiedades.getInstance().getPropiedad("IMAGEN_JPG"), 
+				NubePropiedades.getInstance().getPropiedad("MAIL_UNO")));
 	}
 	
 	@Test
