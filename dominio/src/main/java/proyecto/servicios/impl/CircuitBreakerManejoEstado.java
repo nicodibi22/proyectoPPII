@@ -75,4 +75,12 @@ public class CircuitBreakerManejoEstado {
 	public void setIntentos(int intentos) {
 		this.intentosMaximos = intentos;
 	}
+	
+	public int getTimeout() {
+		return this.timeout;
+	}
+	
+	public int getIntentos() {
+		return this.intentosMaximos;
+	}
 }

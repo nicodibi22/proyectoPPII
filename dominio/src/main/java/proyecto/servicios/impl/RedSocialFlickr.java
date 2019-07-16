@@ -11,6 +11,7 @@ import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
 
+import proyecto.Album;
 import proyecto.servicios.RedSocial;
 
 public class RedSocialFlickr implements RedSocial {
@@ -41,7 +42,7 @@ public class RedSocialFlickr implements RedSocial {
 	}
 
 	@Override
-	public void getFotos(String tag) {
+	public Album getFotos(String tag) {
 		PhotosInterface photos = f.getPhotosInterface();
         SearchParameters params = new SearchParameters();
         try {
@@ -67,6 +68,6 @@ public class RedSocialFlickr implements RedSocial {
 		}
 
         
-		
+		return null;
 	}
 }

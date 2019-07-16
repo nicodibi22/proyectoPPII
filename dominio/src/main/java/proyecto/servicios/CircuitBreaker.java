@@ -2,9 +2,15 @@ package proyecto.servicios;
 
 import java.util.function.Supplier;
 
-public interface CircuitBreaker<R> {
+public interface CircuitBreaker<T, R> {
 
-	void ejecutar(Supplier<R>... func) throws CircuitBreakerException;
+	R ejecutar(Supplier<T>... func) throws CircuitBreakerException;
 	
+	void setTimeout(int timeout);
 	
+	void setIntentos(int intentos);
+	
+	int getTimeout();
+	
+	int getIntentos();
 }

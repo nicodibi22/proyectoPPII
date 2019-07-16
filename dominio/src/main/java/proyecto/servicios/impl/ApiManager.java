@@ -1,37 +1,31 @@
 package proyecto.servicios.impl;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 
-import org.json.simple.JSONObject;
-
-import com.google.gson.JsonObject;
-
+import proyecto.Album;
 import proyecto.CredencialesApi;
-import proyecto.loader.LoaderClase;
-import proyecto.servicios.Autenticador;
-import proyecto.servicios.CircuitBreaker;
-import proyecto.servicios.CircuitBreakerException;
-import proyecto.servicios.INube;
+import proyecto.Resultados;
 import proyecto.servicios.impl.CredencialInfo.CredencialEstado;
 
 public class ApiManager {
 
-	GatewayRedSocial redSocial;
+	GatewayRedSocial oGatewayRedSocial;
 	
-	GatewayNube gNube;
+	GatewayNube oGatewayNube;
 	
 	private GatewayNube getInstanceNube() throws IllegalAccessException {
 		
-		if(gNube == null) {
-			gNube = new GatewayNube(this.credenciales.getUsuario());
+		if(oGatewayNube == null) {
+			oGatewayNube = new GatewayNube(this.credenciales.getUsuario());
 		}
-		return gNube;
+		return oGatewayNube;
+	}
+	
+	private GatewayRedSocial getInstanceRedSocial() {
+		
+		if(oGatewayRedSocial == null) {
+			oGatewayRedSocial = new GatewayRedSocial();
+		}
+		return oGatewayRedSocial;
 	}
 	
 	public enum FormatoRespuesta {
@@ -64,24 +58,13 @@ public class ApiManager {
 		return this.getCredenciales().getEstado().equals(CredencialEstado.VALIDO);
 	}
 	
-	/*public void subirNube(String nombreArchivo) throws AutenticadorExcepcion, Exception {
+	public String subirCompartirNube(String nombreArchivo, String mailUsuarios) throws AutenticadorExcepcion, Exception {
 		if(!estaAutenticado()) {
 			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
 		}
-		
-		
-		GatewayNube gNube = new GatewayNube(this.credenciales.getUsuario());
-		
-		gNube.subirArchivosCompartir(nombreArchivo, mailUsuarios);
-	}*/
-	
-	public void subirCompartirNube(String nombreArchivo, String mailUsuarios) throws AutenticadorExcepcion, Exception {
-		if(!estaAutenticado()) {
-			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
-		}
-				
-		gNube = getInstanceNube();		
-		gNube.subirArchivosCompartir(nombreArchivo, mailUsuarios);
+					
+		Resultados res = getInstanceNube().subirArchivosCompartir(nombreArchivo, mailUsuarios);
+		return getObjetoConFormato(res);
 	}
 	
 	public String obtenerFotos(String tag) throws AutenticadorExcepcion {
@@ -89,15 +72,13 @@ public class ApiManager {
 			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
 		}				
 		
-		redSocial.conectar(this.credenciales.getUsuario());
-		redSocial.getFotos(tag);
-		return "";
+		Album album = getInstanceRedSocial().getFotos(tag);
+		return getObjetoConFormato(album);
 	}
 	
-	public static List<String> getListaNubes() {
-		return Arrays.asList(
-				"GOOGLEDRIVE",
-				"DROPBOX",
-				"ONEDRIVE");
+	
+	public String getObjetoConFormato(Object o) {
+		return ConversorFactory.getConversor(formatoRespuesta).convert(o);
 	}
+	
 }

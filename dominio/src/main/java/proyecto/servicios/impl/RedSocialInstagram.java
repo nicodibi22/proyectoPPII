@@ -24,6 +24,7 @@ import org.jinstagram.entity.users.feed.MediaFeed;
 import org.jinstagram.exceptions.InstagramException;
 import org.jinstagram.http.Response;
 
+import proyecto.Album;
 import proyecto.servicios.RedSocial;
 
 public class RedSocialInstagram implements RedSocial {
@@ -79,9 +80,9 @@ public class RedSocialInstagram implements RedSocial {
 	}
 
 	@Override
-	public void getFotos(String tag) {
+	public Album getFotos(String tag) {
 		System.out.print(" Adding features of Luxury Car.");
-		
+		return null;
 	}
 
 }

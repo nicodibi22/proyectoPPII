@@ -1,10 +1,7 @@
 package proyecto;
 
 import static org.junit.Assert.*;
-
-import org.junit.Ignore;
 import org.junit.Test;
-
 import proyecto.servicios.RedSocial;
 import proyecto.servicios.impl.RedSocialTwitter;
 import twitter4j.TwitterException;
@@ -32,11 +29,11 @@ public class RedSocialTwitterTest {
 		
 	}
 	
-	@Ignore @Test 
+	@Test 
 	public void publicarTest() throws Exception {
 		RedSocial red = new RedSocialTwitter();
 		red.autenticar();
-		red.publicar("ninguno", "/test.jpg");
+		red.publicar("#PruebaPPII", "src/test/resources/imagen.png");
 		
 	}
 }

@@ -39,6 +39,19 @@ public class ApiManagerTest {
 			e.printStackTrace();
 		}
 		
-		api.obtenerFotos("error");
+		System.out.println(api.obtenerFotos("error")); ;		
+	}
+	@Test 
+	public void getFotosTest() throws AutenticadorExcepcion {
+		CredencialesApi credenciales = new CredencialesApi("nicodibi", "algo");
+		ApiManager api = null;
+		try {
+			api = new ApiManager(credenciales, FormatoRespuesta.XML);
+		} catch (AutenticadorExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(api.obtenerFotos("PruebaPPII")); ;		
 	}
 }

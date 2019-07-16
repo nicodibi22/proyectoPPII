@@ -1,0 +1,27 @@
+[
+	{
+		"usuario": "nicodibi",
+		"nubes": [
+			{
+				"nombre": "ConectorDropBox"
+			},
+			{
+				"nombre": "ConectorDrive"
+			},
+			{
+				"nombre": "ConectorICloud"
+			}
+		] 	
+	},
+	{
+		"usuario": "prueba",
+		"nubes": [
+			{
+				"nombre": "ConectorDropBox"
+			},
+			{
+				"nombre": "ConectorDrive"
+			}		
+		] 	
+	}
+]
