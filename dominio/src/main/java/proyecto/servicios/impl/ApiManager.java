@@ -20,7 +20,7 @@ public class ApiManager {
 		return oGatewayNube;
 	}
 	
-	private GatewayRedSocial getInstanceRedSocial() {
+	private synchronized GatewayRedSocial getInstanceRedSocial() {
 		
 		if(oGatewayRedSocial == null) {
 			oGatewayRedSocial = new GatewayRedSocial();
