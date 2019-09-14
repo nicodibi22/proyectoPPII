@@ -109,5 +109,11 @@ public class RedSocialTwitter implements RedSocial {
 		}
 		return fotos;
 	}
+
+	@Override
+	public String getNombre() {
+		// TODO Auto-generated method stub
+		return "TWITTER";
+	}
 	
 }

@@ -1,4 +1,4 @@
-package proyecto.servicios.impl;
+package proyecto;
 
 public class AutenticadorExcepcion extends Exception {
 

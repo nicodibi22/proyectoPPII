@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import proyecto.servicios.Autenticador;
 import proyecto.servicios.impl.AutenticadorApi;
-import proyecto.servicios.impl.AutenticadorExcepcion;
 
 public class AutenticadorApiTest {
 

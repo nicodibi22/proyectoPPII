@@ -1,13 +1,16 @@
 package proyecto.servicios.impl;
 
+import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
+import proyecto.CircuitBreakerExecutionException;
+import proyecto.CircuitBreakerOpenException;
 import proyecto.Resultado;
 import proyecto.Resultado.EstadoResultado;
 import proyecto.servicios.CircuitBreaker;
 import proyecto.servicios.CircuitBreakerException;
 
-public class CircuitBreakerNube implements CircuitBreaker<Boolean, Resultado> {
+public class CircuitBreakerNube implements CircuitBreaker {
 	
 	private int intentos = 5;
 	
@@ -20,8 +23,8 @@ public class CircuitBreakerNube implements CircuitBreaker<Boolean, Resultado> {
 	}
 		
 	@Override
-	public void setTimeout(int timeout) {		
-		this.estadoActual.setTimeout(timeout);
+	public void setTimeout(long timeout) {		
+		//this.estadoActual.setTimeout(timeout);
 	}
 	
 	@Override
@@ -30,7 +33,7 @@ public class CircuitBreakerNube implements CircuitBreaker<Boolean, Resultado> {
 	}
 	
 	@Override
-	public int getTimeout() {		
+	public long getTimeout() {		
 		return this.estadoActual.getTimeout();
 	}
 	
@@ -39,20 +42,21 @@ public class CircuitBreakerNube implements CircuitBreaker<Boolean, Resultado> {
 		return this.estadoActual.getIntentos();
 	}
 	
+
 	@Override
-	public Resultado ejecutar(Supplier<Boolean>...func) throws CircuitBreakerException {
+	public <T> T ejecutar(Supplier<T> func) throws CircuitBreakerException {
 		
 		boolean result = true;
-		Resultado resultado = null;
+		Resultado resultado = new Resultado();
 		if(this.estadoActual.estaAbierto()) {
 			throw new CircuitBreakerOpenException();
 		}
 		
 		if (this.estadoActual.estaCerrado() || this.estadoActual.estaMedioAbierto()) {
 			try {
-				for (Supplier<Boolean> f : func) {
-					result = result && f.get();
-				}
+				
+				func.get();
+				
 			} catch (Exception e) {
 				this.estadoActual.aumentarIntentoFallido();
 				throw new CircuitBreakerExecutionException("Error al ejecutar el servicio.");
@@ -69,9 +73,13 @@ public class CircuitBreakerNube implements CircuitBreaker<Boolean, Resultado> {
 				this.estadoActual.reset();
 			
 		} 
-		return resultado;
+		return null;
 		
 	}  
 	
-
+	@Override
+	public <Boolean> Boolean invoke(Callable<Boolean> c) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

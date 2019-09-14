@@ -11,6 +11,10 @@ public class Resultado {
 		
 	}
 	
+	public static Resultado getInstance() {
+		return new Resultado();
+	}
+	
 	private EstadoResultado estado;
 	
 	private String mensajeError;

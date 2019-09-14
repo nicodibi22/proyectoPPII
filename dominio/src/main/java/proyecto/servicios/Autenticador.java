@@ -1,8 +1,9 @@
 package proyecto.servicios;
 
-import proyecto.servicios.impl.AutenticadorExcepcion;
+import proyecto.AutenticadorExcepcion;
+import proyecto.Token;
 
 public interface Autenticador {
 
-	public void autenticar(String user, String password) throws AutenticadorExcepcion;
+	public Token autenticar(String user, String password) throws AutenticadorExcepcion;
 }

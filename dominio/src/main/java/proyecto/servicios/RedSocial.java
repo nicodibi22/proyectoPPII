@@ -11,4 +11,6 @@ public interface RedSocial {
 	public void publicar(String comentario, String pathArchivo) throws Exception;
 	
 	public Album getFotos(String tag);
+	
+	public String getNombre();
 }

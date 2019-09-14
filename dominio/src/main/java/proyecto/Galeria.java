@@ -2,12 +2,16 @@ package proyecto;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Galeria {
+public class Galeria implements Observer {
 
 	private ArrayList<Image> imagenes;
 	
 	private ArrayList<String> nombres;
+	
+	private ArrayList<Foto> fotos;
 	
 	private int posicionActual = 0;
 	
@@ -61,5 +65,12 @@ public class Galeria {
 		}
 		
 		return nombres.get(posicionActual);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		fotos.addAll(((Album)arg).getFotos());
+		
+		
 	}
 }

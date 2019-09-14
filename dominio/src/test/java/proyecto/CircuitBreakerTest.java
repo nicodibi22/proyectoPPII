@@ -10,9 +10,8 @@ import org.junit.Test;
 import proyecto.Resultado.EstadoResultado;
 import proyecto.servicios.CircuitBreaker;
 import proyecto.servicios.CircuitBreakerException;
-import proyecto.servicios.impl.CircuitBreakerExecutionException;
+import proyecto.servicios.impl.CircuitBreakerImpl;
 import proyecto.servicios.impl.CircuitBreakerNube;
-import proyecto.servicios.impl.CircuitBreakerOpenException;
 
 public class CircuitBreakerTest {
 
@@ -26,7 +25,7 @@ public class CircuitBreakerTest {
 	
 	@Test 
 	public void setearTimeoutAndIntentosTest() {
-		CircuitBreaker<Boolean, Resultado> circuitBreaker = new CircuitBreakerNube();
+		CircuitBreaker circuitBreaker = new CircuitBreakerImpl();
 		circuitBreaker.setTimeout(300);
 		circuitBreaker.setIntentos(3);
 		assertTrue(circuitBreaker.getIntentos() == 3);
@@ -35,7 +34,7 @@ public class CircuitBreakerTest {
 
 	@Test (expected=CircuitBreakerExecutionException.class)
 	public void executionExceptionTest() throws CircuitBreakerException {
-		CircuitBreaker<Boolean, Resultado> circuitBreaker = new CircuitBreakerNube();
+		CircuitBreaker circuitBreaker = new CircuitBreakerNube();
 		
 		Supplier<Boolean> func = () -> falseMethod();
 		circuitBreaker.ejecutar(func);		
@@ -43,7 +42,7 @@ public class CircuitBreakerTest {
 	
 	@Test (expected=CircuitBreakerOpenException.class)
 	public void openExceptionTest() throws CircuitBreakerException {
-		CircuitBreaker<Boolean, Resultado> circuitBreaker = new CircuitBreakerNube();
+		CircuitBreaker circuitBreaker = new CircuitBreakerNube();
 		
 		Supplier<Boolean> func = () -> falseMethod();
 		for(int i = 0; i < 6; i++) {
@@ -58,13 +57,13 @@ public class CircuitBreakerTest {
 	
 	@Test
 	public void circuitBreakerOkMedioAbiertoTest() throws CircuitBreakerException, InterruptedException {
-		CircuitBreaker<Boolean, Resultado> circuitBreaker = new CircuitBreakerNube();
+		CircuitBreaker circuitBreaker = new CircuitBreakerNube();
 		circuitBreaker.setTimeout(1000);
 		Supplier<Boolean> func = () -> falseMethod();
 		Resultado resultado = null;
 		for(int i = 0; i < 7; i++) {
 			try {
-				resultado = circuitBreaker.ejecutar(func);
+				boolean algo = circuitBreaker.ejecutar(func);
 			} catch (CircuitBreakerExecutionException e) {
 				e.printStackTrace();
 			} catch (CircuitBreakerOpenException e) {

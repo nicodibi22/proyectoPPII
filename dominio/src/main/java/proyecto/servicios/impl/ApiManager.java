@@ -1,18 +1,21 @@
 package proyecto.servicios.impl;
 
-
 import proyecto.Album;
+import proyecto.AutenticadorExcepcion;
 import proyecto.CredencialesApi;
 import proyecto.Resultados;
-import proyecto.servicios.impl.CredencialInfo.CredencialEstado;
+import proyecto.Token;
+import proyecto.TokenInvalidoException;
 
 public class ApiManager {
 
+	Token token;
+	
 	GatewayRedSocial oGatewayRedSocial;
 	
 	GatewayNube oGatewayNube;
 	
-	private GatewayNube getInstanceNube() throws IllegalAccessException {
+	private synchronized GatewayNube getInstanceNube() throws IllegalAccessException {
 		
 		if(oGatewayNube == null) {
 			oGatewayNube = new GatewayNube(this.credenciales.getUsuario());
@@ -33,50 +36,38 @@ public class ApiManager {
 		XML
 	}
 	
-	public ApiManager(CredencialesApi credenciales) throws AutenticadorExcepcion {
+	public ApiManager(Token token) throws TokenInvalidoException {
 				
-		this.credenciales = new CredencialesApi(credenciales.getUsuario(), credenciales.getPassword());				
-		this.formatoRespuesta = FormatoRespuesta.JSON;
-		AutenticadorApi.getInstance().autenticar(credenciales.getUsuario(), credenciales.getPassword());
-		
+		this.token = token;		
+		validarToken();							
+		this.formatoRespuesta = FormatoRespuesta.JSON;				
 	}
 	
-	public ApiManager(CredencialesApi credenciales, FormatoRespuesta formato) throws AutenticadorExcepcion {
-		this(credenciales);
+	public ApiManager(Token token, FormatoRespuesta formato) throws AutenticadorExcepcion, TokenInvalidoException {
+		this(token);
 		this.formatoRespuesta = formato;
 	}
-	
-	public CredencialInfo getCredenciales() {
-		return AutenticadorApi.getInstance().getCredenciales(this.credenciales.getUsuario());		
-	}
-	
+		
 	private CredencialesApi credenciales;
 	
 	private FormatoRespuesta formatoRespuesta;
 	
-	private boolean estaAutenticado() {
-		return this.getCredenciales().getEstado().equals(CredencialEstado.VALIDO);
+	private void validarToken() throws TokenInvalidoException {
+		token.validar();
 	}
 	
-	public String subirCompartirNube(String nombreArchivo, String mailUsuarios) throws AutenticadorExcepcion, Exception {
-		if(!estaAutenticado()) {
-			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
-		}
-					
+	public String subirCompartirNube(String nombreArchivo, String mailUsuarios) throws Throwable {
+		validarToken();					
 		Resultados res = getInstanceNube().subirArchivosCompartir(nombreArchivo, mailUsuarios);
 		return getObjetoConFormato(res);
 	}
 	
-	public String obtenerFotos(String tag) throws AutenticadorExcepcion {
-		if(!estaAutenticado()) {
-			throw new AutenticadorExcepcion(AutenticadorExcepcion.USUARIO_NO_AUTENTICADO);
-		}				
-		
+	public String obtenerFotos(String tag) throws Throwable {
+		validarToken();		
 		Album album = getInstanceRedSocial().getFotos(tag);
 		return getObjetoConFormato(album);
 	}
-	
-	
+		
 	public String getObjetoConFormato(Object o) {
 		return ConversorFactory.getConversor(formatoRespuesta).convert(o);
 	}

@@ -79,7 +79,7 @@ public class GatewayNube {
 		ClassLoader loaderGenerico = LoaderClase.class.getClassLoader();
 		LoaderClase loader = new LoaderClase(loaderGenerico);
 						
-		CircuitBreaker<Boolean, Resultado> circuitBreaker = new CircuitBreakerNube();
+		CircuitBreaker circuitBreaker = new CircuitBreakerNube();
 		String respuesta = "";
 		String error = "";
 		for(String n : nubesHabilitadas) {
@@ -88,24 +88,17 @@ public class GatewayNube {
 				Class nube = loader.loadClass(n);					
 				INube drive = (INube)nube.newInstance();
 				
-				try {
-					Supplier<Boolean> con = () -> drive.conectar();
-					Supplier<Boolean> subirCompartir = () -> {
-						try {
-							return drive.uploadAndShare(archivo, mailUsuarios);
-						} catch (IOException e) {
-							return false;
-						}					
-					};
-						
-					r = circuitBreaker.ejecutar(con, subirCompartir);
-					respuesta = drive.getTipo().name() + " - OK";
-			 	} catch (CircuitBreakerException e) {
-			 		respuesta = drive.getTipo().name() + " - ERROR";
-			 		error = e.getMessage();
-			 		r.setEstado(EstadoResultado.ERROR);
-			 		
-				} 	
+				Supplier<Boolean> con = () -> drive.conectar();
+				Supplier<Boolean> subirCompartir = () -> {
+					try {
+						return drive.uploadAndShare(archivo, mailUsuarios);
+					} catch (IOException e) {
+						return false;
+					}					
+				};
+					
+				//r = circuitBreaker.ejecutar(con, subirCompartir);
+				respuesta = drive.getTipo().name() + " - OK"; 	
 			} catch (Exception e) {
 				respuesta = n + " - ERROR";
 		 		error = e.getMessage();

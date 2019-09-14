@@ -13,14 +13,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import proyecto.AutenticadorExcepcion;
+import proyecto.Token;
 import proyecto.servicios.Autenticador;
 import proyecto.servicios.impl.CredencialInfo.CredencialEstado;
 
 public class AutenticadorApi implements Autenticador {
 
-	private static AutenticadorApi instance = null;
-	
-	private CredencialInfo credencial; 
+	private static AutenticadorApi instance = null;	
 	
 	public static AutenticadorApi getInstance() {
 	      if(instance == null) {
@@ -36,27 +36,23 @@ public class AutenticadorApi implements Autenticador {
 	}
 	
 	@Override
-	public void autenticar(String user, String password) throws AutenticadorExcepcion {
-		credenciales.remove(user);
-		CredencialEstado estado = null;
-		try {
-			if(!usuarios.containsKey(user))
-			{
-				estado = CredencialEstado.INEXISTENTE;
+	public Token autenticar(String user, String password) throws AutenticadorExcepcion {
 				
-			} else if(!usuarios.get(user).equals(password)) {
-				estado = CredencialEstado.INVALIDO;
-				
-			} else {
-				estado = CredencialEstado.VALIDO;
-			}	
-		} finally {
-			credencial = new CredencialInfo(user, estado);		
-			credenciales.put(user, credencial);		
-		}						
+		verificarCredenciales(user, password);
+		return new GeneradorToken(user, 300000L).getToken();				
 		
 	}
 
+	private void verificarCredenciales(String user, String password) throws AutenticadorExcepcion {
+		
+		if(!usuarios.containsKey(user)) {
+			throw new AutenticadorExcepcion("Usuario inexistente.");
+		} else if(!usuarios.get(user).equals(password)) {			
+			throw new AutenticadorExcepcion("Usuario inválido.");
+		} 
+						
+	}
+	
 	private void cargarUsuariosRegistrados() {
 		JSONParser parser = new JSONParser();
 		try {			
@@ -79,8 +75,5 @@ public class AutenticadorApi implements Autenticador {
 			e.printStackTrace();
 		}
 	}
-	
-	public CredencialInfo getCredenciales(String user) {
-		return credenciales.get(user);
-	}
+		
 }

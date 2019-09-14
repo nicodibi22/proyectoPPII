@@ -1,16 +1,19 @@
 package proyecto.servicios;
 
+import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
-public interface CircuitBreaker<T, R> {
+public interface CircuitBreaker {
 
-	R ejecutar(Supplier<T>... func) throws CircuitBreakerException;
+	<T> T invoke(Callable<T> c) throws Exception;
 	
-	void setTimeout(int timeout);
+	<T> T ejecutar(Supplier<T> func) throws CircuitBreakerException;
+	
+	void setTimeout(long timeout);
 	
 	void setIntentos(int intentos);
 	
-	int getTimeout();
+	long getTimeout();
 	
 	int getIntentos();
 }

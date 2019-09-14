@@ -1,4 +1,4 @@
-package proyecto.servicios.impl;
+package proyecto;
 
 import proyecto.servicios.CircuitBreakerException;
 

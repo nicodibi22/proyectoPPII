@@ -70,4 +70,10 @@ public class RedSocialFlickr implements RedSocial {
         
 		return null;
 	}
+
+	@Override
+	public String getNombre() {
+		// TODO Auto-generated method stub
+		return "FLICKR";
+	}
 }
